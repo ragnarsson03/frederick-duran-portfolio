@@ -8,20 +8,19 @@ import {
   Server,
   Layers,
   Sparkles,
-  Check,
-  Copy,
-  ShieldCheck,
   ChevronRight,
   Globe,
   Radio,
   UserCheck,
   Lock,
-  Download,
   Image as ImageIcon,
   X,
   Award,
   Building2,
-  GraduationCap
+  GraduationCap,
+  Briefcase,
+  Terminal,
+  Cpu
 } from "lucide-react";
 
 // Inline Github Icon SVG
@@ -49,116 +48,106 @@ interface Project {
   tags: string[];
   githubUrl?: string;
   isPrivateGithub?: boolean;
+  productionUrl?: string;
   demoUrl?: string;
-  apkUrl?: string;
   images?: { src: string; caption: string }[];
-  credentials?: {
-    user: string;
-    pass: string;
-    note: string;
-  };
   badge?: string;
 }
 
 const projectsData: Project[] = [
   {
+    id: "detector-voz",
+    title: "Detector de Voz a Texto",
+    category: "next",
+    badge: "En Producción",
+    description:
+      "Aplicación web de producción diseñada para la transcripción inmediata de audio a texto en tiempo real, conectada directamente a modelos de inferencia en la nube.",
+    highlights: [
+      "Aplicación web desplegada y lista para usar en Vercel",
+      "Arquitectura limpia en Next.js y TypeScript",
+      "Procesamiento directo con APIs de alta velocidad y latencia ultrabaja"
+    ],
+    tags: ["Next.js", "TypeScript", "AI Cloud Inference", "Web Audio API", "Vercel"],
+    githubUrl: "https://github.com/ragnarsson03/app-detector-de-voz",
+    productionUrl: "https://app-detector-de-voz.vercel.app/"
+  },
+  {
+    id: "mtg-budget",
+    title: "MTG Budget Generator",
+    category: "next",
+    badge: "En Producción",
+    description:
+      "Aplicación web SaaS para la automatización de presupuestos digitales de clientes textiles y comerciales con exportación a PDF.",
+    highlights: [
+      "Sistema desplegado en producción listo para uso comercial",
+      "Desarrollado con React y TypeScript para máxima consistencia de tipos",
+      "Cálculo automático de subtotales, márgenes, impuestos y facturación PDF"
+    ],
+    tags: ["React", "TypeScript", "PDF Generation", "Lógica Financiera", "Vercel"],
+    githubUrl: "https://github.com/ragnarsson03/Presupuesto-mtg",
+    productionUrl: "https://presupuesto-mtg.vercel.app/"
+  },
+  {
+    id: "dolar-bcv",
+    title: "App Dólar BCV",
+    category: "tools",
+    badge: "En Producción",
+    description:
+      "Aplicación web ágil y ligera para la consulta en tiempo real y cálculo basado en la tasa de cambio oficial del Banco Central de Venezuela.",
+    highlights: [
+      "Desplegado activamente en Vercel con excelente rendimiento",
+      "Construido con Vite para tiempos de carga y empaquetado instantáneos",
+      "Consumo directo de API oficial con interfaz dinámica e intuitiva"
+    ],
+    tags: ["Vite", "React", "REST API", "Tailwind CSS", "Vercel"],
+    githubUrl: "https://github.com/ragnarsson03/dolar-bcv-vercel",
+    productionUrl: "https://dolar-bcv-vercel.vercel.app/"
+  },
+  {
     id: "san-agustin",
     title: "Ecosistema Digital San Agustín",
     category: "fullstack",
-    badge: "Proyecto Destacado",
+    badge: "Arquitectura Cloud & Microservicios",
     description:
-      "Plataforma digital centralizada e innovadora con arquitectura de microservicios, backend en Node.js/Express, Supabase y MongoDB Atlas. Aplicación móvil en Flutter y Frontend web.",
+      "Plataforma digital centralizada con arquitectura de microservicios. Backend Node.js/Express en producción en Vercel, integrado con Supabase y MongoDB Atlas.",
     highlights: [
-      "Gestión de flujos de Integración Continua (CI/CD) y despliegue continuo en Vercel",
-      "Backend en producción conectado a Supabase y MongoDB Atlas",
-      "Demostración técnica en vivo mediante capturas y credenciales de prueba"
+      "Gestión integral de flujos CI/CD y despliegue continuo en la nube",
+      "Backend modular en Node.js, Express, MongoDB Atlas y Supabase",
+      "Aplicación móvil en Flutter y ecosistema web integrado"
     ],
     tags: ["Node.js", "Express", "MongoDB", "Supabase", "Flutter", "Vercel", "CI/CD"],
     githubUrl: "https://github.com/ragnarsson03/SanAgustin-Ecosistema-Digital",
     isPrivateGithub: true,
     demoUrl: "https://sanagustinbackend-one.vercel.app",
-    apkUrl: "https://mhkttisvybxwgkxwxypj.supabase.co/storage/v1/object/public/apk/SanAgustin.apk",
     images: [
       { src: "/assets/san_agustin.jpg", caption: "Vista Principal / Inicio del Ecosistema San Agustín" },
       { src: "/assets/san_agustin2.png", caption: "Panel Administrativo / Gestión de Usuarios" },
       { src: "/assets/san_agustin3.jpg", caption: "Módulo de Eventos & Actividades Digitales" },
       { src: "/assets/san_agustin4.jpg", caption: "Interfaz Móvil / Flutter App Ecosistema" }
-    ],
-    credentials: {
-      user: "admin@sanagustin.com (o sanagustin@admin.com)",
-      pass: "admin123",
-      note: "Acceso con rol de Administrador en el backend de producción"
-    }
-  },
-  {
-    id: "detector-voz",
-    title: "Detector de Voz a Texto",
-    category: "next",
-    badge: "Desplegado en Producción",
-    description:
-      "Aplicación web de alta velocidad para transcripción de audio en tiempo real basada en modelos de inferencia en la nube.",
-    highlights: [
-      "Desplegado y funcionando en Vercel: https://app-detector-de-voz.vercel.app/",
-      "Construido con Next.js y TypeScript con arquitectura limpia",
-      "Conexión directa con APIs de inferencia en la nube para transcripción veloz"
-    ],
-    tags: ["Next.js", "TypeScript", "AI Cloud Inference", "Web Audio API", "Vercel"],
-    githubUrl: "https://github.com/ragnarsson03/app-detector-de-voz",
-    demoUrl: "https://app-detector-de-voz.vercel.app/"
+    ]
   },
   {
     id: "sis-uneti",
     title: "Sistema SIS-UNETI",
     category: "fullstack",
-    badge: "Liderazgo Técnico",
+    badge: "Liderazgo Técnico (Team Lead)",
     description:
       "Plataforma digital universitaria centralizada con arquitectura de microservicios e integración transversal con Moodle.",
     highlights: [
-      "Rol: Team Lead de la Célula 01 al mando de la arquitectura del proyecto",
-      "Supervisión del esquema de seguridad y establecimiento de convenciones de Git",
-      "Evaluación y revisión periódica de Pull Requests (PRs)"
+      "Liderazgo de equipo como Team Lead de la Célula 01",
+      "Definición de la arquitectura de seguridad y estándares de repositorio",
+      "Supervisión y revisión exhaustiva de Pull Requests (PRs)"
     ],
     tags: ["Team Lead", "Microservicios", "Moodle API", "TypeScript", "Seguridad"],
     githubUrl: "https://github.com/ragnarsson03/SIS-UNETI",
     images: [
       { src: "/assets/sis-uneti.png", caption: "Interfaz y Módulos del Sistema Universitario SIS-UNETI (Célula 01)" }
     ]
-  },
-  {
-    id: "mtg-budget",
-    title: "MTG Budget Generator",
-    category: "next",
-    badge: "SaaS & PDFs",
-    description:
-      "Aplicación web para automatización de presupuestos digitales para clientes textiles y comerciales.",
-    highlights: [
-      "Cálculo automático de subtotales, margen de ganancia e impuestos",
-      "Generación de reportes y presupuestos en PDF descargables",
-      "Desplegado en Vercel con excelente experiencia de usuario"
-    ],
-    tags: ["React", "Next.js", "PDF Generator", "Lógica Financiera", "Vercel"],
-    githubUrl: "https://github.com/ragnarsson03/mtg_textiless"
-  },
-  {
-    id: "dolar-bcv",
-    title: "App Dólar BCV",
-    category: "tools",
-    badge: "Vite + Alta Velocidad",
-    description:
-      "Herramienta web ágil construida con Vite para monitoreo y cálculo basado en la tasa de cambio oficial del Banco Central de Venezuela.",
-    highlights: [
-      "Optimizado con Vite para carga instantánea en cualquier dispositivo",
-      "Consumo directo de la API oficial del Banco Central de Venezuela",
-      "Desplegado públicamente en Vercel"
-    ],
-    tags: ["Vite", "React", "REST API", "Tailwind CSS", "Vercel"],
-    githubUrl: "https://github.com/ragnarsson03/dolar-bcv-vercel"
   }
 ];
 
 export default function Home() {
   const [activeTab, setActiveTab] = useState<"all" | "next" | "fullstack" | "tools">("all");
-  const [copiedIndex, setCopiedIndex] = useState<string | null>(null);
   const [selectedImage, setSelectedImage] = useState<{ src: string; caption: string } | null>(null);
 
   const filteredProjects =
@@ -166,20 +155,17 @@ export default function Home() {
       ? projectsData
       : projectsData.filter((p) => p.category === activeTab);
 
-  const copyToClipboard = (text: string, id: string) => {
-    navigator.clipboard.writeText(text);
-    setCopiedIndex(id);
-    setTimeout(() => setCopiedIndex(null), 2500);
-  };
-
   return (
-    <div className="relative min-h-screen bg-[#090d16] text-slate-200 overflow-hidden">
-      {/* Background Lighting Elements */}
-      <div className="pointer-events-none absolute -top-40 -left-40 w-96 h-96 bg-blue-600/20 rounded-full blur-[128px]"></div>
-      <div className="pointer-events-none absolute top-1/3 -right-40 w-96 h-96 bg-purple-600/20 rounded-full blur-[128px]"></div>
-      <div className="pointer-events-none absolute bottom-10 left-1/3 w-96 h-96 bg-emerald-600/15 rounded-full blur-[128px]"></div>
+    <div className="relative min-h-screen bg-[#080c14] text-slate-200 overflow-hidden font-sans selection:bg-blue-600 selection:text-white">
+      {/* Background Glow Highlights */}
+      <div className="pointer-events-none absolute -top-40 -left-40 w-[500px] h-[500px] bg-blue-600/15 rounded-full blur-[140px]"></div>
+      <div className="pointer-events-none absolute top-1/3 -right-40 w-[500px] h-[500px] bg-indigo-600/15 rounded-full blur-[140px]"></div>
+      <div className="pointer-events-none absolute bottom-10 left-1/3 w-[500px] h-[500px] bg-emerald-600/10 rounded-full blur-[140px]"></div>
 
-      {/* Header */}
+      {/* Grid Overlay */}
+      <div className="absolute inset-0 bg-grid-pattern opacity-10 pointer-events-none"></div>
+
+      {/* Header / Navbar */}
       <motion.header
         initial={{ y: -50, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
@@ -188,7 +174,7 @@ export default function Home() {
       >
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-500 flex items-center justify-center text-white font-bold text-lg shadow-lg shadow-blue-500/20">
+            <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-blue-600 via-indigo-600 to-purple-600 flex items-center justify-center text-white font-extrabold text-lg shadow-lg shadow-blue-600/25">
               FD
             </div>
             <div>
@@ -196,27 +182,27 @@ export default function Home() {
                 Frederick Durán
               </h1>
               <p className="text-xs text-slate-400 font-mono">
-                ragnarsson03 • Fullstack Developer
+                ragnarsson03 • Software Engineer & Team Lead
               </p>
             </div>
           </div>
 
-          <div className="hidden md:flex items-center gap-6 text-sm font-medium text-slate-300">
-            <a href="#proyectos" className="hover:text-blue-400 transition-colors">
-              Proyectos & Pruebas
+          <div className="hidden md:flex items-center gap-8 text-sm font-medium text-slate-300">
+            <a href="#proyectos" className="hover:text-blue-400 transition-colors flex items-center gap-1.5">
+              <Code2 className="w-4 h-4 text-blue-400" /> Proyectos
             </a>
-            <a href="#experiencia" className="hover:text-blue-400 transition-colors">
-              Trayectoria & Experiencia
+            <a href="#experiencia" className="hover:text-blue-400 transition-colors flex items-center gap-1.5">
+              <Briefcase className="w-4 h-4 text-emerald-400" /> Trayectoria
             </a>
-            <a href="#san-agustin-credenciales" className="hover:text-blue-400 transition-colors">
-              San Agustín Credentials
+            <a href="#habilidades" className="hover:text-blue-400 transition-colors flex items-center gap-1.5">
+              <Cpu className="w-4 h-4 text-purple-400" /> Stack Técnico
             </a>
           </div>
 
           <div className="flex items-center gap-3">
-            <span className="hidden sm:inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-medium bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+            <span className="hidden sm:inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
               <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-              Disponible para Proyectos
+              Disponible para Oportunidades
             </span>
             <a
               href="https://github.com/ragnarsson03"
@@ -231,37 +217,41 @@ export default function Home() {
         </div>
       </motion.header>
 
-      {/* Main Content */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-8 pt-12 pb-24 relative z-10 space-y-20">
-        
-        {/* Hero Section */}
-        <section className="text-center sm:text-left grid grid-cols-1 lg:grid-cols-12 gap-10 items-center pt-4">
+      {/* Main Container */}
+      <main className="max-w-7xl mx-auto px-4 sm:px-8 pt-12 pb-24 relative z-10 space-y-24">
+
+        {/* Professional Hero Section */}
+        <section className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center pt-4">
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6 }}
-            className="lg:col-span-8 space-y-6"
+            className="lg:col-span-8 space-y-6 text-center sm:text-left"
           >
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-semibold bg-blue-500/10 text-blue-400 border border-blue-500/20">
-              <Sparkles className="w-3.5 h-3.5" />
-              Desarrollador React, Next.js, TypeScript & Node.js
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-semibold bg-blue-500/10 text-blue-400 border border-blue-500/20">
+              <Sparkles className="w-4 h-4" />
+              Ingeniería de Software & Liderazgo Técnico
             </div>
-            
-            <h2 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white leading-tight">
+
+            <h2 className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight text-white leading-[1.1]">
               Hola, soy <span className="glow-gradient">Frederick Durán</span>
             </h2>
 
             <p className="text-slate-300 text-base sm:text-lg max-w-2xl leading-relaxed">
-              Desarrollador Fullstack con liderazgo comprobado como <strong className="text-white">Team Lead de la Célula 01</strong> en el proyecto universitario <strong className="text-white">SIS-UNETI</strong> y arquitecto del <strong className="text-white">Ecosistema Digital San Agustín</strong>. Dominio integral desde el código hasta la infraestructura y servidores.
+              Desarrollador Fullstack especializado en la construcción de soluciones web robustas con <strong className="text-white">React</strong>, <strong className="text-white">Next.js</strong>, <strong className="text-white">TypeScript</strong> y <strong className="text-white">Node.js</strong>.
             </p>
 
-            <div className="flex flex-wrap items-center gap-4 pt-2 justify-center sm:justify-start">
+            <p className="text-slate-400 text-sm sm:text-base max-w-2xl leading-relaxed">
+              Con liderazgo probado como <strong className="text-slate-200">Team Lead de la Célula 01</strong> en la plataforma <strong className="text-slate-200">SIS-UNETI</strong>, arquitecto backend del <strong className="text-slate-200">Ecosistema Digital San Agustín</strong> y especialista en redes e infraestructura en <strong className="text-slate-200">Misión Ribas</strong>. Visión 360° desde la primera línea de código hasta el servidor en producción.
+            </p>
+
+            <div className="flex flex-wrap items-center gap-4 pt-4 justify-center sm:justify-start">
               <a
                 href="#proyectos"
-                className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-semibold text-sm shadow-xl shadow-blue-600/25 transition-all hover:scale-[1.02]"
+                className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white font-semibold text-sm shadow-xl shadow-blue-600/25 transition-all hover:scale-[1.02]"
               >
                 <Code2 className="w-4 h-4" />
-                Explorar Proyectos & Capturas
+                Ver Proyectos & Capturas
               </a>
 
               <a
@@ -271,148 +261,63 @@ export default function Home() {
                 className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-emerald-600/20 hover:bg-emerald-600/30 text-emerald-400 font-semibold text-sm border border-emerald-500/30 transition-all"
               >
                 <Globe className="w-4 h-4" />
-                Probar App Detector de Voz en Vivo
+                Probador Detector de Voz
               </a>
             </div>
 
-            {/* Micro Tech Pills */}
-            <div className="pt-6 border-t border-slate-800/80 flex flex-wrap gap-2 text-xs font-mono text-slate-400">
-              <span className="px-2.5 py-1 rounded-md bg-slate-900 border border-slate-800">Next.js 16</span>
-              <span className="px-2.5 py-1 rounded-md bg-slate-900 border border-slate-800">TypeScript</span>
-              <span className="px-2.5 py-1 rounded-md bg-slate-900 border border-slate-800">React</span>
-              <span className="px-2.5 py-1 rounded-md bg-slate-900 border border-slate-800">Tailwind CSS</span>
-              <span className="px-2.5 py-1 rounded-md bg-slate-900 border border-slate-800">Vite</span>
-              <span className="px-2.5 py-1 rounded-md bg-slate-900 border border-slate-800">Node.js</span>
-              <span className="px-2.5 py-1 rounded-md bg-slate-900 border border-slate-800">MongoDB</span>
-              <span className="px-2.5 py-1 rounded-md bg-slate-900 border border-slate-800">Supabase</span>
-              <span className="px-2.5 py-1 rounded-md bg-slate-900 border border-slate-800">Vercel</span>
+            {/* Micro Tech Stack Badges */}
+            <div className="pt-6 border-t border-slate-800/80 flex flex-wrap gap-2 text-xs font-mono text-slate-400 justify-center sm:justify-start">
+              <span className="px-3 py-1 rounded-lg bg-slate-900 border border-slate-800 text-slate-300">Next.js 16</span>
+              <span className="px-3 py-1 rounded-lg bg-slate-900 border border-slate-800 text-slate-300">TypeScript</span>
+              <span className="px-3 py-1 rounded-lg bg-slate-900 border border-slate-800 text-slate-300">React</span>
+              <span className="px-3 py-1 rounded-lg bg-slate-900 border border-slate-800 text-slate-300">Tailwind CSS</span>
+              <span className="px-3 py-1 rounded-lg bg-slate-900 border border-slate-800 text-slate-300">Vite</span>
+              <span className="px-3 py-1 rounded-lg bg-slate-900 border border-slate-800 text-slate-300">Node.js</span>
+              <span className="px-3 py-1 rounded-lg bg-slate-900 border border-slate-800 text-slate-300">MongoDB Atlas</span>
+              <span className="px-3 py-1 rounded-lg bg-slate-900 border border-slate-800 text-slate-300">Supabase</span>
+              <span className="px-3 py-1 rounded-lg bg-slate-900 border border-slate-800 text-slate-300">Vercel</span>
             </div>
           </motion.div>
 
-          {/* Hero Card Summary */}
+          {/* Hero Side Metric Card */}
           <motion.div
             initial={{ opacity: 0, x: 30 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
             className="lg:col-span-4"
           >
-            <div className="glass-card rounded-2xl p-6 border border-slate-800 space-y-6 relative overflow-hidden">
+            <div className="glass-card rounded-2xl p-6 border border-slate-800 space-y-6 relative overflow-hidden shadow-2xl">
               <div className="flex items-center justify-between">
-                <span className="text-xs font-mono uppercase tracking-wider text-slate-400">
-                  Resumen de Perfil
+                <span className="text-xs font-mono uppercase tracking-wider text-blue-400 font-bold">
+                  Destacados de Perfil
                 </span>
-                <span className="w-2.5 h-2.5 rounded-full bg-blue-500 animate-ping"></span>
+                <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping"></span>
               </div>
 
               <div className="space-y-4">
-                <div className="flex items-start gap-3 p-3 rounded-xl bg-slate-900/60 border border-slate-800">
-                  <UserCheck className="w-5 h-5 text-blue-400 mt-0.5" />
+                <div className="flex items-start gap-3.5 p-3.5 rounded-xl bg-slate-950/80 border border-slate-800/80">
+                  <UserCheck className="w-5 h-5 text-blue-400 shrink-0 mt-0.5" />
                   <div>
-                    <h4 className="text-sm font-semibold text-white">Team Lead Célula 01</h4>
-                    <p className="text-xs text-slate-400">SIS-UNETI • Arquitectura & PRs</p>
+                    <h4 className="text-sm font-bold text-white">Team Lead Célula 01</h4>
+                    <p className="text-xs text-slate-400">SIS-UNETI • Control de Calidad & PRs</p>
                   </div>
                 </div>
 
-                <div className="flex items-start gap-3 p-3 rounded-xl bg-slate-900/60 border border-slate-800">
-                  <Server className="w-5 h-5 text-purple-400 mt-0.5" />
+                <div className="flex items-start gap-3.5 p-3.5 rounded-xl bg-slate-950/80 border border-slate-800/80">
+                  <Server className="w-5 h-5 text-purple-400 shrink-0 mt-0.5" />
                   <div>
-                    <h4 className="text-sm font-semibold text-white">CI/CD & Despliegues</h4>
+                    <h4 className="text-sm font-bold text-white">Arquitectura & CI/CD</h4>
                     <p className="text-xs text-slate-400">Ecosistema San Agustín en Vercel</p>
                   </div>
                 </div>
 
-                <div className="flex items-start gap-3 p-3 rounded-xl bg-slate-900/60 border border-slate-800">
-                  <Radio className="w-5 h-5 text-emerald-400 mt-0.5" />
+                <div className="flex items-start gap-3.5 p-3.5 rounded-xl bg-slate-950/80 border border-slate-800/80">
+                  <Radio className="w-5 h-5 text-emerald-400 shrink-0 mt-0.5" />
                   <div>
-                    <h4 className="text-sm font-semibold text-white">Infraestructura & Soporte</h4>
+                    <h4 className="text-sm font-bold text-white">Infraestructura & Redes</h4>
                     <p className="text-xs text-slate-400">Misión Ribas • EFPP • CANTV</p>
                   </div>
                 </div>
-              </div>
-            </div>
-          </motion.div>
-        </section>
-
-        {/* San Agustín Live Credentials Inspector */}
-        <section id="san-agustin-credenciales" className="scroll-mt-24">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-            className="glass-card rounded-2xl p-6 sm:p-8 border border-blue-500/20 bg-slate-900/60"
-          >
-            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pb-6 border-b border-slate-800">
-              <div className="flex items-center gap-3">
-                <div className="p-3 rounded-xl bg-blue-500/10 text-blue-400 border border-blue-500/20">
-                  <ShieldCheck className="w-6 h-6" />
-                </div>
-                <div>
-                  <h3 className="text-xl font-bold text-white">
-                    Proyecto San Agustín: Credenciales & Acceso Demo
-                  </h3>
-                  <p className="text-sm text-slate-400">
-                    Acceso de demostración técnica para la API backend en Vercel.
-                  </p>
-                </div>
-              </div>
-
-              <a
-                href="https://sanagustinbackend-one.vercel.app"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-blue-600/20 hover:bg-blue-600/30 text-blue-400 text-sm font-semibold border border-blue-500/30 transition-all"
-              >
-                <Globe className="w-4 h-4" />
-                Backend Live API
-                <ExternalLink className="w-3.5 h-3.5" />
-              </a>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-6">
-              <div className="p-4 rounded-xl bg-slate-950 border border-slate-800 space-y-2">
-                <span className="text-xs text-slate-400 font-mono uppercase">Usuario Admin Demo</span>
-                <div className="flex items-center justify-between text-sm font-semibold text-white">
-                  <span>admin@sanagustin.com</span>
-                  <button
-                    onClick={() => copyToClipboard("admin@sanagustin.com", "user_demo")}
-                    className="text-slate-400 hover:text-blue-400"
-                    title="Copiar usuario"
-                  >
-                    {copiedIndex === "user_demo" ? <Check className="w-4 h-4 text-emerald-400" /> : <Copy className="w-4 h-4" />}
-                  </button>
-                </div>
-                <p className="text-[11px] text-slate-500">(O sanagustin@admin.com en módulo dev)</p>
-              </div>
-
-              <div className="p-4 rounded-xl bg-slate-950 border border-slate-800 space-y-2">
-                <span className="text-xs text-slate-400 font-mono uppercase">Contraseña Demo</span>
-                <div className="flex items-center justify-between text-sm font-semibold text-white">
-                  <span>admin123</span>
-                  <button
-                    onClick={() => copyToClipboard("admin123", "pass_demo")}
-                    className="text-slate-400 hover:text-blue-400"
-                    title="Copiar clave"
-                  >
-                    {copiedIndex === "pass_demo" ? <Check className="w-4 h-4 text-emerald-400" /> : <Copy className="w-4 h-4" />}
-                  </button>
-                </div>
-                <p className="text-[11px] text-slate-500">Hash de seguridad bcrypt</p>
-              </div>
-
-              <div className="p-4 rounded-xl bg-slate-950 border border-slate-800 space-y-2">
-                <span className="text-xs text-slate-400 font-mono uppercase">Admin Secret Key</span>
-                <div className="flex items-center justify-between text-sm font-semibold text-white">
-                  <span>SanAgustinSecure2026</span>
-                  <button
-                    onClick={() => copyToClipboard("SanAgustinSecure2026", "secret_demo")}
-                    className="text-slate-400 hover:text-blue-400"
-                    title="Copiar secret key"
-                  >
-                    {copiedIndex === "secret_demo" ? <Check className="w-4 h-4 text-emerald-400" /> : <Copy className="w-4 h-4" />}
-                  </button>
-                </div>
-                <p className="text-[11px] text-slate-500">Permiso para gestión total del sistema</p>
               </div>
             </div>
           </motion.div>
@@ -423,13 +328,13 @@ export default function Home() {
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
             <div>
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 mb-2">
-                <Layers className="w-3.5 h-3.5" /> Galería de Proyectos & Pruebas
+                <Layers className="w-3.5 h-3.5" /> Portafolio de Productos en Producción
               </div>
               <h3 className="text-2xl sm:text-4xl font-extrabold text-white">
                 Proyectos, Capturas y Demostraciones
               </h3>
               <p className="text-slate-400 text-sm mt-1">
-                Haz clic en las capturas para ampliar los detalles de cada sistema.
+                Haz clic en cualquier imagen para abrir el visor interactivo de capturas.
               </p>
             </div>
 
@@ -437,41 +342,37 @@ export default function Home() {
             <div className="flex items-center gap-2 p-1.5 rounded-xl bg-slate-900 border border-slate-800 self-start">
               <button
                 onClick={() => setActiveTab("all")}
-                className={`px-3.5 py-1.5 rounded-lg text-xs font-medium transition-all ${
-                  activeTab === "all"
-                    ? "bg-blue-600 text-white shadow-md shadow-blue-600/20"
-                    : "text-slate-400 hover:text-white"
-                }`}
+                className={`px-3.5 py-1.5 rounded-lg text-xs font-medium transition-all ${activeTab === "all"
+                  ? "bg-blue-600 text-white shadow-md shadow-blue-600/20"
+                  : "text-slate-400 hover:text-white"
+                  }`}
               >
                 Todos (5)
               </button>
               <button
                 onClick={() => setActiveTab("next")}
-                className={`px-3.5 py-1.5 rounded-lg text-xs font-medium transition-all ${
-                  activeTab === "next"
-                    ? "bg-blue-600 text-white shadow-md shadow-blue-600/20"
-                    : "text-slate-400 hover:text-white"
-                }`}
+                className={`px-3.5 py-1.5 rounded-lg text-xs font-medium transition-all ${activeTab === "next"
+                  ? "bg-blue-600 text-white shadow-md shadow-blue-600/20"
+                  : "text-slate-400 hover:text-white"
+                  }`}
               >
                 Next.js / Frontend
               </button>
               <button
                 onClick={() => setActiveTab("fullstack")}
-                className={`px-3.5 py-1.5 rounded-lg text-xs font-medium transition-all ${
-                  activeTab === "fullstack"
-                    ? "bg-blue-600 text-white shadow-md shadow-blue-600/20"
-                    : "text-slate-400 hover:text-white"
-                }`}
+                className={`px-3.5 py-1.5 rounded-lg text-xs font-medium transition-all ${activeTab === "fullstack"
+                  ? "bg-blue-600 text-white shadow-md shadow-blue-600/20"
+                  : "text-slate-400 hover:text-white"
+                  }`}
               >
                 Fullstack / Backend
               </button>
               <button
                 onClick={() => setActiveTab("tools")}
-                className={`px-3.5 py-1.5 rounded-lg text-xs font-medium transition-all ${
-                  activeTab === "tools"
-                    ? "bg-blue-600 text-white shadow-md shadow-blue-600/20"
-                    : "text-slate-400 hover:text-white"
-                }`}
+                className={`px-3.5 py-1.5 rounded-lg text-xs font-medium transition-all ${activeTab === "tools"
+                  ? "bg-blue-600 text-white shadow-md shadow-blue-600/20"
+                  : "text-slate-400 hover:text-white"
+                  }`}
               >
                 Herramientas & Vite
               </button>
@@ -495,7 +396,7 @@ export default function Home() {
                       {project.badge}
                     </span>
                     {project.isPrivateGithub ? (
-                      <span className="inline-flex items-center gap-1.5 text-xs text-amber-400 bg-amber-500/10 px-2 py-0.5 rounded border border-amber-500/20" title="Repositorio Privado">
+                      <span className="inline-flex items-center gap-1 text-xs text-amber-400 bg-amber-500/10 px-2 py-0.5 rounded border border-amber-500/20" title="Repositorio Privado">
                         <Lock className="w-3.5 h-3.5" /> Privado
                       </span>
                     ) : (
@@ -505,7 +406,7 @@ export default function Home() {
                           target="_blank"
                           rel="noopener noreferrer"
                           className="text-slate-400 hover:text-white transition-colors"
-                          title="Ver en GitHub"
+                          title="Ver Repositorio en GitHub"
                         >
                           <GithubIcon className="w-5 h-5" />
                         </a>
@@ -522,7 +423,7 @@ export default function Home() {
                     </p>
                   </div>
 
-                  {/* Screenshots Showcase Grid if available */}
+                  {/* Screenshot Lightbox Gallery */}
                   {project.images && project.images.length > 0 && (
                     <div className="space-y-2 pt-2">
                       <span className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider flex items-center gap-1">
@@ -540,8 +441,8 @@ export default function Home() {
                               alt={img.caption}
                               className="object-cover w-full h-full group-hover:scale-105 transition-transform duration-300"
                             />
-                            <div className="absolute inset-0 bg-slate-950/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-[10px] text-white font-medium text-center p-1">
-                              Ver Completo
+                            <div className="absolute inset-0 bg-slate-950/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-[10px] text-white font-medium text-center p-1">
+                              Ampliar
                             </div>
                           </div>
                         ))}
@@ -551,7 +452,7 @@ export default function Home() {
 
                   <div className="space-y-2 pt-2 border-t border-slate-800/80">
                     <span className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider">
-                      Aspectos Clave:
+                      Puntos Clave:
                     </span>
                     <ul className="space-y-1 text-xs text-slate-300">
                       {project.highlights.map((h, i) => (
@@ -562,14 +463,6 @@ export default function Home() {
                       ))}
                     </ul>
                   </div>
-
-                  {project.credentials && (
-                    <div className="p-3 rounded-xl bg-slate-950 border border-slate-800 text-[11px] space-y-1 font-mono text-slate-300">
-                      <p className="text-blue-400 font-bold">🔐 Demo Login:</p>
-                      <p>User: {project.credentials.user}</p>
-                      <p>Pass: {project.credentials.pass}</p>
-                    </div>
-                  )}
                 </div>
 
                 <div className="space-y-4 pt-4 border-t border-slate-800/80">
@@ -587,7 +480,7 @@ export default function Home() {
                   <div className="flex items-center gap-2">
                     {project.isPrivateGithub ? (
                       <span className="flex-1 inline-flex items-center justify-center gap-1.5 px-3 py-2 rounded-xl bg-slate-900 text-amber-300 text-xs font-semibold border border-amber-800/40">
-                        <Lock className="w-3.5 h-3.5" /> Frontend Privado (Flutter)
+                        <Lock className="w-3.5 h-3.5" /> Code Repo Privado
                       </span>
                     ) : (
                       project.githubUrl && (
@@ -598,34 +491,35 @@ export default function Home() {
                           className="flex-1 inline-flex items-center justify-center gap-2 px-3 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-white text-xs font-semibold transition-all border border-slate-700/80"
                         >
                           <GithubIcon className="w-3.5 h-3.5" />
-                          Código Repo
+                          GitHub Repo
                         </a>
                       )
                     )}
 
-                    {project.demoUrl && (
+                    {project.productionUrl && (
+                      <a
+                        href={project.productionUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center justify-center gap-1.5 px-3 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-semibold transition-all shadow-md shadow-emerald-600/20"
+                        title="Ver App en Producción"
+                      >
+                        <Globe className="w-3.5 h-3.5" />
+                        App Producción
+                        <ExternalLink className="w-3 h-3" />
+                      </a>
+                    )}
+
+                    {project.demoUrl && !project.productionUrl && (
                       <a
                         href={project.demoUrl}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="inline-flex items-center justify-center gap-1 px-3 py-2 rounded-xl bg-blue-600/20 hover:bg-blue-600/30 text-blue-400 text-xs font-semibold border border-blue-500/30 transition-all"
-                        title="Ver en Vivo / API"
+                        title="Ver Backend API en Vercel"
                       >
                         <Globe className="w-3.5 h-3.5" />
-                        Demo API
-                      </a>
-                    )}
-
-                    {project.apkUrl && (
-                      <a
-                        href={project.apkUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center justify-center gap-1 px-3 py-2 rounded-xl bg-emerald-600/20 hover:bg-emerald-600/30 text-emerald-400 text-xs font-semibold border border-emerald-500/30 transition-all"
-                        title="Descargar APK desde Supabase Storage"
-                      >
-                        <Download className="w-3.5 h-3.5" />
-                        APK Móvil
+                        Backend Live API
                       </a>
                     )}
                   </div>
@@ -639,10 +533,10 @@ export default function Home() {
         <section id="experiencia" className="scroll-mt-24 space-y-8">
           <div>
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 mb-2">
-              <GraduationCap className="w-3.5 h-3.5" /> Trayectoria Técnica & Laboral
+              <GraduationCap className="w-3.5 h-3.5" /> Trayectoria Profesional & Formación
             </div>
             <h3 className="text-2xl sm:text-4xl font-extrabold text-white">
-              Experiencia, Pasantías & Liderazgo
+              Experiencia Laboral, Pasantías & Liderazgo
             </h3>
           </div>
 
@@ -665,7 +559,7 @@ export default function Home() {
               </div>
               <div className="space-y-2 text-xs text-slate-300">
                 <p className="font-semibold text-slate-200">Analista y Soporte a Computadoras</p>
-                <p className="text-slate-400">Diagnóstico, mantenimiento preventivo y correctivo de hardware, configuración de redes locales y soporte a usuarios.</p>
+                <p className="text-slate-400">Diagnóstico, mantenimiento preventivo y correctivo de hardware, configuración de redes locales y soporte integral.</p>
               </div>
             </motion.div>
 
@@ -681,13 +575,13 @@ export default function Home() {
                   <Award className="w-6 h-6" />
                 </div>
                 <div>
-                  <h4 className="text-base font-bold text-white">2021 - 2023 | CANTV</h4>
+                  <h4 className="text-base font-bold text-white">2024 | CANTV</h4>
                   <p className="text-xs text-emerald-400">Pasantías Primer Año</p>
                 </div>
               </div>
               <div className="space-y-2 text-xs text-slate-300">
                 <p className="font-semibold text-slate-200">Proyecto 2024: <span className="text-emerald-400 font-bold">APROBADO</span></p>
-                <p className="text-slate-400">Desarrollo de proyectos técnicos en infraestructuras de comunicación y redes de datos a gran escala.</p>
+                <p className="text-slate-400">Participación activa en proyectos de infraestructura de telecomunicaciones y redes de datos.</p>
               </div>
             </motion.div>
 
@@ -703,13 +597,13 @@ export default function Home() {
                   <Award className="w-6 h-6" />
                 </div>
                 <div>
-                  <h4 className="text-base font-bold text-white">2024 - 2025 | Sindicatura</h4>
+                  <h4 className="text-base font-bold text-white">2025 | Sindicatura</h4>
                   <p className="text-xs text-purple-400">Sindicatura Municipal de Caracas</p>
                 </div>
               </div>
               <div className="space-y-2 text-xs text-slate-300">
                 <p className="font-semibold text-slate-200">Pasantías Segundo Año • Proyecto 2025: <span className="text-emerald-400 font-bold">APROBADO</span></p>
-                <p className="text-slate-400">Construcción e implementación de sistemas de software institucional y gestión administrativa.</p>
+                <p className="text-slate-400">Desarrollo e implementación de sistemas de software institucional y gestión administrativa.</p>
               </div>
             </motion.div>
           </div>
@@ -721,7 +615,7 @@ export default function Home() {
                 <h4 className="text-base font-bold text-white">Team Lead Célula 01 (SIS-UNETI)</h4>
               </div>
               <p className="text-xs text-slate-300 leading-relaxed">
-                Supervisión del diseño de arquitectura de seguridad para la plataforma universitaria SIS-UNETI. Definición de estándares de código, revisión estricta de PRs y liderazgo del equipo técnico.
+                Supervisión del diseño de arquitectura de seguridad para la plataforma universitaria SIS-UNETI. Definición de estándares de código, revisión estricta de Pull Requests (PRs) y liderazgo del equipo técnico.
               </p>
             </div>
 
@@ -731,8 +625,52 @@ export default function Home() {
                 <h4 className="text-base font-bold text-white">Misión Ribas (Infraestructura y Redes)</h4>
               </div>
               <p className="text-xs text-slate-300 leading-relaxed">
-                Soporte técnico integral, configuración de servidores y mantenimiento de redes informáticas. Visión completa de desarrollo desde el código hasta la infraestructura.
+                Soporte técnico integral, configuración de servidores y mantenimiento de redes informáticas. Visión completa de desarrollo desde el código hasta la infraestructura de servidores.
               </p>
+            </div>
+          </div>
+        </section>
+
+        {/* Tech Stack Matrix Section */}
+        <section id="habilidades" className="scroll-mt-24 space-y-6">
+          <div>
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-purple-500/10 text-purple-400 border border-purple-500/20 mb-2">
+              <Cpu className="w-3.5 h-3.5" /> Habilidades Clave
+            </div>
+            <h3 className="text-2xl sm:text-4xl font-extrabold text-white">
+              Tecnologías & Herramientas
+            </h3>
+          </div>
+
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-4">
+            <div className="p-4 rounded-xl glass-card border border-slate-800 text-center space-y-2">
+              <div className="text-blue-400 font-bold text-base">Frontend</div>
+              <p className="text-xs text-slate-400">React, Next.js, TypeScript, Tailwind CSS, Vite</p>
+            </div>
+
+            <div className="p-4 rounded-xl glass-card border border-slate-800 text-center space-y-2">
+              <div className="text-purple-400 font-bold text-base">Backend</div>
+              <p className="text-xs text-slate-400">Node.js, Express.js, REST APIs, Microservicios</p>
+            </div>
+
+            <div className="p-4 rounded-xl glass-card border border-slate-800 text-center space-y-2">
+              <div className="text-emerald-400 font-bold text-base">Bases de Datos</div>
+              <p className="text-xs text-slate-400">MongoDB Atlas, Supabase (PostgreSQL)</p>
+            </div>
+
+            <div className="p-4 rounded-xl glass-card border border-slate-800 text-center space-y-2">
+              <div className="text-amber-400 font-bold text-base">DevOps & Cloud</div>
+              <p className="text-xs text-slate-400">Vercel, CI/CD, Git, GitHub Actions</p>
+            </div>
+
+            <div className="p-4 rounded-xl glass-card border border-slate-800 text-center space-y-2">
+              <div className="text-pink-400 font-bold text-base">Liderazgo</div>
+              <p className="text-xs text-slate-400">Team Lead, Code Reviews, Git Workflow</p>
+            </div>
+
+            <div className="p-4 rounded-xl glass-card border border-slate-800 text-center space-y-2">
+              <div className="text-indigo-400 font-bold text-base">Infraestructura</div>
+              <p className="text-xs text-slate-400">Redes, Servidores, Soporte Técnico Linux/Win</p>
             </div>
           </div>
         </section>
@@ -754,7 +692,7 @@ export default function Home() {
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.9, opacity: 0 }}
               onClick={(e) => e.stopPropagation()}
-              className="relative max-w-4xl w-full glass-card rounded-2xl p-4 border border-slate-700 overflow-hidden"
+              className="relative max-w-4xl w-full glass-card rounded-2xl p-4 border border-slate-700 overflow-hidden shadow-2xl"
             >
               <button
                 onClick={() => setSelectedImage(null)}
@@ -787,7 +725,7 @@ export default function Home() {
             </a>
             <span>•</span>
             <a href="https://app-detector-de-voz.vercel.app/" target="_blank" rel="noopener noreferrer" className="hover:text-white">
-              Detector de Voz Live
+              Detector de Voz en Producción
             </a>
           </div>
         </div>
