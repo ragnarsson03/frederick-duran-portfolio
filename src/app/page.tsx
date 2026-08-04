@@ -119,7 +119,10 @@ const projectsData: Project[] = [
       "Evaluación y revisión periódica de Pull Requests (PRs)"
     ],
     tags: ["Team Lead", "Microservicios", "Moodle API", "TypeScript", "Seguridad"],
-    githubUrl: "https://github.com/ragnarsson03/SIS-UNETI"
+    githubUrl: "https://github.com/ragnarsson03/SIS-UNETI",
+    images: [
+      { src: "/assets/sis-uneti.png", caption: "Interfaz y Módulos del Sistema Universitario SIS-UNETI (Célula 01)" }
+    ]
   },
   {
     id: "mtg-budget",
