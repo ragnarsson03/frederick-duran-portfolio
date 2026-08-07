@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { LanguageProvider } from "@/context/LanguageContext";
 
 export const metadata: Metadata = {
   title: "Frederick Durán | Software Architect & Full Stack Developer",
@@ -16,7 +17,9 @@ export default function RootLayout({
   return (
     <html lang="es" className="dark scroll-smooth">
       <body className="bg-[#050811] text-slate-100 antialiased min-h-screen selection:bg-blue-500 selection:text-white font-sans">
-        {children}
+        <LanguageProvider>
+          {children}
+        </LanguageProvider>
       </body>
     </html>
   );

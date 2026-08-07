@@ -2,6 +2,9 @@
 
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useLanguage } from "@/context/LanguageContext";
+import { LanguageSelector } from "@/components/LanguageSelector";
+import { projectsList, experienceList, skillCategoriesData } from "@/content/translations";
 import {
   ExternalLink,
   Code2,
@@ -32,14 +35,12 @@ import {
   HardDrive,
   Activity,
   CheckCircle2,
-  Settings,
-  Flame,
-  LayoutGrid
+  Settings
 } from "lucide-react";
 
 // Inline Technology SVGs
-const TechLogos = {
-  React: (props: { className?: string }) => (
+const TechLogos: Record<string, (props: { className?: string }) => React.JSX.Element> = {
+  React: (props) => (
     <svg className={props.className || "w-5 h-5"} viewBox="0 0 100 100" fill="none">
       <circle cx="50" cy="50" r="10" fill="#61DAFB" />
       <ellipse cx="50" cy="50" rx="4.5" ry="11" transform="rotate(30 50 50)" stroke="#61DAFB" strokeWidth="1" />
@@ -47,7 +48,7 @@ const TechLogos = {
       <ellipse cx="50" cy="50" rx="4.5" ry="11" transform="rotate(150 50 50)" stroke="#61DAFB" strokeWidth="1" />
     </svg>
   ),
-  Nextjs: (props: { className?: string }) => (
+  Nextjs: (props) => (
     <svg className={props.className || "w-5 h-5"} viewBox="0 0 180 180" fill="none">
       <mask id="mask0_next" maskUnits="userSpaceOnUse" x="0" y="0" width="180" height="180">
         <circle cx="90" cy="90" r="90" fill="black" />
@@ -59,18 +60,18 @@ const TechLogos = {
       </g>
     </svg>
   ),
-  TypeScript: (props: { className?: string }) => (
+  TypeScript: (props) => (
     <svg className={props.className || "w-5 h-5"} viewBox="0 0 100 100">
       <rect width="100" height="100" rx="20" fill="#3178C6"/>
       <path d="M57 65.5C57 73 50.5 77 41.5 77C33.5 77 27 73 24 67.5L32.5 62C34.5 65.5 38 67.5 41.5 67.5C45 67.5 47 66 47 63.5C47 61.5 45.5 60.5 41.5 59.5L37 58.5C28.5 56.5 24.5 52 24.5 44C24.5 35.5 32 31.5 41 31.5C48 31.5 53.5 34.5 56.5 40L48.5 45.5C46.5 42 44 40.5 41 40.5C37.5 40.5 35 42 35 44C35 45.5 36.5 46.5 40.5 47.5L44.5 48.5C53.5 50.5 57 55.5 57 65.5ZM92 41.5H77.5V76.5H67.5V41.5H53V32.5H92V41.5Z" fill="white"/>
     </svg>
   ),
-  Tailwind: (props: { className?: string }) => (
+  Tailwind: (props) => (
     <svg className={props.className || "w-5 h-5"} viewBox="0 0 100 100">
       <path d="M26 34C31 24 40 21 47 26C51 29 54 33 57 37C63 43 69 47 77 47C87 47 93 39 96 34C91 44 82 47 75 42C71 39 68 35 65 31C59 25 53 21 45 21C35 21 29 29 26 34ZM6 59C11 49 20 46 27 51C31 54 34 58 37 62C43 68 49 72 57 72C67 72 73 64 76 59C71 69 62 72 55 67C51 64 48 60 45 56C39 50 33 46 25 46C15 46 9 54 6 59Z" fill="#38BDF8"/>
     </svg>
   ),
-  Vite: (props: { className?: string }) => (
+  Vite: (props) => (
     <svg className={props.className || "w-5 h-5"} viewBox="0 0 100 100">
       <path d="M82 10L49 90L46 90L17 25L38 25L48 57L62 10H82Z" fill="url(#vite-grad1)" />
       <path d="M82 10L60 62L48 57L65 10H82Z" fill="url(#vite-grad2)" />
@@ -86,47 +87,57 @@ const TechLogos = {
       </defs>
     </svg>
   ),
-  Nodejs: (props: { className?: string }) => (
+  Nodejs: (props) => (
     <svg className={props.className || "w-5 h-5"} viewBox="0 0 100 100">
       <path d="M50 10L85 30V70L50 90L15 70V30L50 10Z" fill="#339933"/>
       <path d="M50 25L72 38V62L50 75L28 62V38L50 25Z" fill="#215732"/>
       <circle cx="50" cy="50" r="10" fill="#FFFFFF"/>
     </svg>
   ),
-  Express: (props: { className?: string }) => (
+  Express: (props) => (
     <svg className={props.className || "w-5 h-5"} viewBox="0 0 100 100">
       <rect width="100" height="100" rx="20" fill="#1e293b"/>
       <text x="50%" y="60%" textAnchor="middle" fill="#ffffff" fontSize="38" fontWeight="bold" fontFamily="monospace">ex</text>
     </svg>
   ),
-  MongoDB: (props: { className?: string }) => (
+  MongoDB: (props) => (
     <svg className={props.className || "w-5 h-5"} viewBox="0 0 100 100">
       <path d="M50 8C50 8 30 35 30 58C30 75 42 88 50 92C58 88 70 75 70 58C70 35 50 8 50 8Z" fill="#47A248"/>
       <path d="M50 8V92C51 92 70 75 70 58C70 35 50 8 50 8Z" fill="#499D4A"/>
     </svg>
   ),
-  Supabase: (props: { className?: string }) => (
+  Supabase: (props) => (
     <svg className={props.className || "w-5 h-5"} viewBox="0 0 100 100">
       <path d="M56 8L12 58H46L36 92L88 42H52L56 8Z" fill="#3ECF8E"/>
     </svg>
   ),
-  Vercel: (props: { className?: string }) => (
+  Vercel: (props) => (
     <svg className={props.className || "w-5 h-5"} viewBox="0 0 100 100">
       <path d="M50 15L90 85H10L50 15Z" fill="#FFFFFF"/>
     </svg>
   ),
-  Proxmox: (props: { className?: string }) => (
+  Proxmox: (props) => (
     <svg className={props.className || "w-5 h-5"} viewBox="0 0 100 100">
       <rect width="100" height="100" rx="20" fill="#E57000"/>
       <path d="M25 25H75V42H43V58H75V75H25V25Z" fill="#FFFFFF"/>
     </svg>
   ),
-  Samba4: (props: { className?: string }) => (
+  Samba4: (props) => (
     <svg className={props.className || "w-5 h-5"} viewBox="0 0 100 100">
       <rect width="100" height="100" rx="20" fill="#C7254E"/>
       <text x="50%" y="62%" textAnchor="middle" fill="#FFFFFF" fontSize="32" fontWeight="bold" fontFamily="monospace">AD</text>
     </svg>
-  )
+  ),
+  REST: (props) => <Server className={props.className || "w-5 h-5 text-purple-400"} />,
+  Microservices: (props) => <Layers className={props.className || "w-5 h-5 text-purple-400"} />,
+  CICD: (props) => <Workflow className={props.className || "w-5 h-5 text-amber-400"} />,
+  GitFlow: (props) => <GitBranch className={props.className || "w-5 h-5 text-amber-400"} />,
+  TeamLead: (props) => <UserCheck className={props.className || "w-5 h-5 text-pink-400"} />,
+  PRReview: (props) => <ShieldCheck className={props.className || "w-5 h-5 text-pink-400"} />,
+  Architecture: (props) => <Cpu className={props.className || "w-5 h-5 text-pink-400"} />,
+  Network: (props) => <Network className={props.className || "w-5 h-5 text-orange-400"} />,
+  HardDrive: (props) => <HardDrive className={props.className || "w-5 h-5 text-orange-400"} />,
+  Settings: (props) => <Settings className={props.className || "w-5 h-5 text-orange-400"} />
 };
 
 // Github Icon SVG
@@ -145,209 +156,15 @@ const GithubIcon = ({ className = "w-4 h-4" }: { className?: string }) => (
   </svg>
 );
 
-interface Project {
-  id: string;
-  nodeId: string;
-  title: string;
-  category: "next" | "fullstack" | "infra" | "tools";
-  status: "STABLE_PRD" | "LIVE_ACCESS" | "ENTERPRISE_CORE" | "INFRA_CLUSTER";
-  description: string;
-  highlights: string[];
-  tags: string[];
-  githubUrl?: string;
-  isPrivateGithub?: boolean;
-  productionUrl?: string;
-  demoUrl?: string;
-  images?: { src: string; caption: string }[];
-}
-
-const projectsData: Project[] = [
-  {
-    id: "mision-ribas",
-    nodeId: "ID_NODE: 0x0",
-    title: "/ Misión Ribas: Active Directory & Sistema Asistencia",
-    category: "infra",
-    status: "INFRA_CLUSTER",
-    description:
-      "Infraestructura de servidores en Proxmox VE con Active Directory (Samba4) para autenticación centralizada y dominio de red. Integrado con el Sistema Web de Asistencia y Gestión de Empleados de Misión Ribas.",
-    highlights: [
-      "Virtualización Proxmox VE con Samba4 Active Directory Domain Controller",
-      "Control de usuarios, directivas de grupo GPO y permisos de red institucional",
-      "Sistema de gestión y control de asistencia de empleados de Misión Ribas"
-    ],
-    tags: ["Proxmox VE", "Samba4 AD", "Active Directory", "Linux Server", "Sistema Asistencia", "Redes"],
-    isPrivateGithub: true,
-    images: [
-      { src: "/assets/mision-ribas/usuarios_active_directory.jpg", caption: "Panel Active Directory RSAT (Samba4 Domain Controller en Proxmox VE)" },
-      { src: "/assets/mision-ribas/sistema_asistencia_ribas.jpg", caption: "Sistema Web de Asistencia y Gestión de Empleados Misión Ribas" }
-    ]
-  },
-  {
-    id: "detector-voz",
-    nodeId: "ID_NODE: 0x1",
-    title: "/ SpeechToText AI System",
-    category: "next",
-    status: "STABLE_PRD",
-    description:
-      "High-speed real-time audio transcription infrastructure built on cloud inference APIs. Engineered for minimal latency and direct web audio stream processing.",
-    highlights: [
-      "Production deployment running live on Vercel infrastructure",
-      "Clean modular architecture using Next.js 16 & TypeScript",
-      "Direct WebSocket / REST cloud audio inference processing"
-    ],
-    tags: ["Next.js", "TypeScript", "AI Cloud Inference", "Web Audio API", "Vercel"],
-    githubUrl: "https://github.com/ragnarsson03/app-detector-de-voz",
-    productionUrl: "https://app-detector-de-voz.vercel.app/"
-  },
-  {
-    id: "mtg-budget",
-    nodeId: "ID_NODE: 0x2",
-    title: "/ MTG Budget SaaS Generator",
-    category: "next",
-    status: "LIVE_ACCESS",
-    description:
-      "Commercial automation suite for client financial estimates and digital invoice rendering. Features client-side state calculation and dynamic PDF compilation.",
-    highlights: [
-      "Live commercial SaaS engine with instant PDF generation",
-      "Strict type safety using React and TypeScript",
-      "Automatic tax subtotal computation and export handling"
-    ],
-    tags: ["React", "TypeScript", "PDF Engine", "Financial Logic", "Vercel"],
-    githubUrl: "https://github.com/ragnarsson03/Presupuesto-mtg",
-    productionUrl: "https://presupuesto-mtg.vercel.app/"
-  },
-  {
-    id: "dolar-bcv",
-    nodeId: "ID_NODE: 0x3",
-    title: "/ BCV Currency Exchange Monitor",
-    category: "tools",
-    status: "STABLE_PRD",
-    description:
-      "Ultra-fast local currency monitoring application consuming real-time official exchange rates from the Central Bank of Venezuela.",
-    highlights: [
-      "Optimized with Vite for instant build asset loading and zero latency",
-      "Real-time REST API consumption with reactive calculation state",
-      "Deployed and cached on Vercel edge networks"
-    ],
-    tags: ["Vite", "React", "REST API", "Tailwind CSS", "Vercel"],
-    githubUrl: "https://github.com/ragnarsson03/dolar-bcv-vercel",
-    productionUrl: "https://dolar-bcv-vercel.vercel.app/"
-  },
-  {
-    id: "san-agustin",
-    nodeId: "ID_NODE: 0x4",
-    title: "/ San Agustín Digital Ecosystem",
-    category: "fullstack",
-    status: "ENTERPRISE_CORE",
-    description:
-      "Centralized microservices platform connecting administration, mobile Flutter clients, and web portals via Node.js/Express, Supabase, and MongoDB Atlas.",
-    highlights: [
-      "Automated CI/CD continuous deployment pipeline setup on Vercel",
-      "Modular Node.js/Express backend paired with Supabase & MongoDB Atlas",
-      "Cross-platform architecture integrating Flutter mobile client"
-    ],
-    tags: ["Node.js", "Express", "MongoDB", "Supabase", "Flutter", "Vercel", "CI/CD"],
-    githubUrl: "https://github.com/ragnarsson03/SanAgustin-Ecosistema-Digital",
-    isPrivateGithub: true,
-    demoUrl: "https://sanagustinbackend-one.vercel.app",
-    images: [
-      { src: "/assets/san_agustin.jpg", caption: "Vista Principal / Inicio del Ecosistema San Agustín" },
-      { src: "/assets/san_agustin2.png", caption: "Panel Administrativo / Gestión de Usuarios" },
-      { src: "/assets/san_agustin3.jpg", caption: "Módulo de Eventos & Actividades Digitales" },
-      { src: "/assets/san_agustin4.jpg", caption: "Interfaz Móvil / Flutter App Ecosistema" }
-    ]
-  },
-  {
-    id: "sis-uneti",
-    nodeId: "ID_NODE: 0x5",
-    title: "/ SIS-UNETI University Engine",
-    category: "fullstack",
-    status: "ENTERPRISE_CORE",
-    description:
-      "University administrative digital core with microservices architecture and Moodle platform integration. Spearheaded as Team Lead of Cell 01.",
-    highlights: [
-      "Technical Team Lead overseeing security architecture & PR evaluations",
-      "Repository conventions and strict Git-flow management for dev cell",
-      "Transversal data synchronization with institutional Moodle platform"
-    ],
-    tags: ["Team Lead", "Microservices", "Moodle API", "TypeScript", "Security"],
-    githubUrl: "https://github.com/ragnarsson03/SIS-UNETI",
-    images: [
-      { src: "/assets/sis-uneti.png", caption: "Interfaz y Módulos del Sistema Universitario SIS-UNETI (Célula 01)" }
-    ]
-  }
-];
-
-// Complete Skill Domains Matrix
-const techSkillsMatrix = [
-  {
-    category: "FRONTEND",
-    color: "border-blue-500/30 text-blue-400 bg-blue-500/5",
-    items: [
-      { name: "React", logo: <TechLogos.React className="w-5 h-5" /> },
-      { name: "Next.js 16", logo: <TechLogos.Nextjs className="w-5 h-5" /> },
-      { name: "TypeScript", logo: <TechLogos.TypeScript className="w-5 h-5" /> },
-      { name: "Tailwind CSS", logo: <TechLogos.Tailwind className="w-5 h-5" /> },
-      { name: "Vite", logo: <TechLogos.Vite className="w-5 h-5" /> }
-    ]
-  },
-  {
-    category: "BACKEND",
-    color: "border-purple-500/30 text-purple-400 bg-purple-500/5",
-    items: [
-      { name: "Node.js", logo: <TechLogos.Nodejs className="w-5 h-5" /> },
-      { name: "Express.js", logo: <TechLogos.Express className="w-5 h-5" /> },
-      { name: "REST APIs", logo: <Server className="w-5 h-5 text-purple-400" /> },
-      { name: "Microservices", logo: <Layers className="w-5 h-5 text-purple-400" /> }
-    ]
-  },
-  {
-    category: "DATABASES",
-    color: "border-emerald-500/30 text-emerald-400 bg-emerald-500/5",
-    items: [
-      { name: "MongoDB Atlas", logo: <TechLogos.MongoDB className="w-5 h-5" /> },
-      { name: "Supabase (Postgres)", logo: <TechLogos.Supabase className="w-5 h-5" /> }
-    ]
-  },
-  {
-    category: "DEVOPS",
-    color: "border-amber-500/30 text-amber-400 bg-amber-500/5",
-    items: [
-      { name: "Vercel", logo: <TechLogos.Vercel className="w-5 h-5" /> },
-      { name: "CI/CD Pipelines", logo: <Workflow className="w-5 h-5 text-amber-400" /> },
-      { name: "Git-Flow", logo: <GitBranch className="w-5 h-5 text-amber-400" /> }
-    ]
-  },
-  {
-    category: "LEADERSHIP",
-    color: "border-pink-500/30 text-pink-400 bg-pink-500/5",
-    items: [
-      { name: "Team Lead (Célula 01)", logo: <UserCheck className="w-5 h-5 text-pink-400" /> },
-      { name: "PR Reviews & Quality", logo: <ShieldCheck className="w-5 h-5 text-pink-400" /> },
-      { name: "System Architecture", logo: <Cpu className="w-5 h-5 text-pink-400" /> }
-    ]
-  },
-  {
-    category: "HARDWARE & INFRASTRUCTURE",
-    color: "border-orange-500/30 text-orange-400 bg-orange-500/5",
-    items: [
-      { name: "Proxmox VE Cluster", logo: <TechLogos.Proxmox className="w-5 h-5" /> },
-      { name: "Samba4 Active Directory", logo: <TechLogos.Samba4 className="w-5 h-5" /> },
-      { name: "Redes & Dominio RSAT", logo: <Network className="w-5 h-5 text-orange-400" /> },
-      { name: "Servidores Linux & Win", logo: <HardDrive className="w-5 h-5 text-orange-400" /> },
-      { name: "Soporte Técnico Especializado", logo: <Settings className="w-5 h-5 text-orange-400" /> }
-    ]
-  }
-];
-
 export default function Home() {
+  const { language, t } = useLanguage();
   const [activeTab, setActiveTab] = useState<"all" | "next" | "fullstack" | "infra" | "tools">("all");
   const [selectedImage, setSelectedImage] = useState<{ src: string; caption: string } | null>(null);
 
   const filteredProjects =
     activeTab === "all"
-      ? projectsData
-      : projectsData.filter((p) => p.category === activeTab);
+      ? projectsList
+      : projectsList.filter((p) => p.category === activeTab);
 
   return (
     <div className="relative min-h-screen bg-[#050811] text-slate-200 overflow-hidden font-mono selection:bg-blue-600 selection:text-white">
@@ -370,11 +187,11 @@ export default function Home() {
           <div className="flex items-center gap-3">
             <div className="flex items-center gap-1.5 px-2.5 py-1 rounded bg-slate-900 border border-slate-800 text-xs font-mono text-blue-400">
               <Terminal className="w-3.5 h-3.5" />
-              <span>F_DURÁN_v2.6</span>
+              <span>{t.nav.version}</span>
             </div>
             <div className="hidden sm:flex items-center gap-1 text-[11px] text-slate-500 font-mono">
               <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-              <span>SYSTEM_ACTIVE // STABLE_ENV</span>
+              <span>{t.nav.status}</span>
             </div>
           </div>
 
@@ -385,32 +202,35 @@ export default function Home() {
               className="px-3 py-1.5 rounded hover:bg-slate-900 text-slate-300 hover:text-blue-400 transition-colors flex items-center gap-1.5"
             >
               <FileCode2 className="w-3.5 h-3.5 text-blue-400" />
-              <span>startup.sh</span>
+              <span>{t.nav.tabs.hero}</span>
             </a>
             <a
               href="#habilidades"
               className="px-3 py-1.5 rounded hover:bg-slate-900 text-slate-300 hover:text-blue-400 transition-colors flex items-center gap-1.5"
             >
               <FileCode2 className="w-3.5 h-3.5 text-amber-400" />
-              <span>stack.json</span>
+              <span>{t.nav.tabs.stack}</span>
             </a>
             <a
               href="#proyectos"
               className="px-3 py-1.5 rounded hover:bg-slate-900 text-slate-300 hover:text-blue-400 transition-colors flex items-center gap-1.5"
             >
               <FileCode2 className="w-3.5 h-3.5 text-purple-400" />
-              <span>projects.ts</span>
+              <span>{t.nav.tabs.projects}</span>
             </a>
             <a
               href="#experiencia"
               className="px-3 py-1.5 rounded hover:bg-slate-900 text-slate-300 hover:text-blue-400 transition-colors flex items-center gap-1.5"
             >
               <FileCode2 className="w-3.5 h-3.5 text-emerald-400" />
-              <span>experience.log</span>
+              <span>{t.nav.tabs.experience}</span>
             </a>
           </div>
 
           <div className="flex items-center gap-3">
+            {/* Senior Language Switcher Component */}
+            <LanguageSelector />
+
             <a
               href="https://github.com/ragnarsson03"
               target="_blank"
@@ -418,7 +238,7 @@ export default function Home() {
               className="flex items-center gap-2 px-3.5 py-1.5 rounded-lg bg-slate-900 hover:bg-slate-800 text-white text-xs font-mono transition-all border border-slate-700/80"
             >
               <GithubIcon className="w-3.5 h-3.5" />
-              <span>GITHUB</span>
+              <span>{t.nav.githubBtn}</span>
             </a>
           </div>
         </div>
@@ -437,27 +257,27 @@ export default function Home() {
           >
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-md text-xs font-mono bg-blue-500/10 text-blue-400 border border-blue-500/20">
               <Command className="w-3.5 h-3.5" />
-              <span>ROOT_ORCHESTRATOR // FULL_STACK_ENGINEER</span>
+              <span>{t.hero.badge}</span>
             </div>
             
             <div className="space-y-2">
               <span className="text-xs font-mono text-slate-500 uppercase tracking-widest block">
-                // EXECUTIVE_SUMMARY
+                {t.hero.tagline}
               </span>
               <h2 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white font-sans leading-tight">
-                Frederick Durán
+                {t.hero.name}
               </h2>
               <p className="text-blue-400 text-sm font-mono">
-                Software Architect & Team Lead Célula 01 @ SIS-UNETI
+                {t.hero.subRole}
               </p>
             </div>
 
             <p className="text-slate-300 text-sm sm:text-base leading-relaxed font-sans max-w-2xl">
-              Engineering high-scale digital solutions with structural integrity and clean architectural patterns. Specialized in <strong className="text-white">React</strong>, <strong className="text-white">Next.js</strong>, <strong className="text-white">TypeScript</strong>, <strong className="text-white">Node.js</strong> and production cloud deployments.
+              {t.hero.bio}
             </p>
 
             <p className="text-slate-400 text-xs sm:text-sm leading-relaxed font-sans max-w-2xl">
-              Proven technical leadership managing pull requests, code standards, microservices and server infrastructure including <strong className="text-slate-200">Proxmox VE + Samba4 Active Directory</strong> at <strong className="text-slate-200">Misión Ribas</strong>.
+              {t.hero.leadership}
             </p>
 
             <div className="flex flex-wrap items-center gap-4 pt-4">
@@ -466,7 +286,7 @@ export default function Home() {
                 className="inline-flex items-center gap-2 px-5 py-3 rounded-lg bg-blue-600 hover:bg-blue-500 text-white font-mono text-xs font-semibold shadow-lg shadow-blue-600/25 transition-all"
               >
                 <Code2 className="w-4 h-4" />
-                <span>EXPLORE_PROJECTS()</span>
+                <span>{t.hero.exploreBtn}</span>
               </a>
 
               <a
@@ -476,7 +296,7 @@ export default function Home() {
                 className="inline-flex items-center gap-2 px-5 py-3 rounded-lg bg-emerald-950/60 hover:bg-emerald-900/60 text-emerald-400 font-mono text-xs font-semibold border border-emerald-500/30 transition-all"
               >
                 <Globe className="w-4 h-4" />
-                <span>LIVE_DEMO_AI()</span>
+                <span>{t.hero.demoBtn}</span>
               </a>
             </div>
 
@@ -506,41 +326,41 @@ export default function Home() {
                   <span className="w-3 h-3 rounded-full bg-amber-500/80 inline-block"></span>
                   <span className="w-3 h-3 rounded-full bg-emerald-500/80 inline-block"></span>
                 </div>
-                <span className="text-[10px] text-slate-500">kernel_status.log</span>
+                <span className="text-[10px] text-slate-500">{t.hero.console.header}</span>
               </div>
 
               <div className="space-y-3">
                 <div className="p-3 rounded bg-slate-950 border border-slate-800/80 space-y-1">
                   <div className="flex items-center justify-between text-[11px]">
-                    <span className="text-blue-400 font-bold">// ROLE</span>
-                    <span className="text-slate-500">ACTIVE</span>
+                    <span className="text-blue-400 font-bold">{t.hero.console.role}</span>
+                    <span className="text-slate-500">{t.hero.console.roleActive}</span>
                   </div>
-                  <p className="text-slate-200 text-xs font-sans font-semibold">Team Lead Célula 01</p>
-                  <p className="text-[11px] text-slate-400">SIS-UNETI PR Reviews & Security</p>
+                  <p className="text-slate-200 text-xs font-sans font-semibold">{t.hero.console.roleTitle}</p>
+                  <p className="text-[11px] text-slate-400">{t.hero.console.roleDesc}</p>
                 </div>
 
                 <div className="p-3 rounded bg-slate-950 border border-slate-800/80 space-y-1">
                   <div className="flex items-center justify-between text-[11px]">
-                    <span className="text-purple-400 font-bold">// DEPLOYMENTS</span>
-                    <span className="text-slate-500">VERCEL</span>
+                    <span className="text-purple-400 font-bold">{t.hero.console.deployments}</span>
+                    <span className="text-slate-500">{t.hero.console.deploymentsActive}</span>
                   </div>
-                  <p className="text-slate-200 text-xs font-sans font-semibold">San Agustín Cloud Ecosystem</p>
-                  <p className="text-[11px] text-slate-400">CI/CD Pipeline & Express Backend</p>
+                  <p className="text-slate-200 text-xs font-sans font-semibold">{t.hero.console.deploymentsTitle}</p>
+                  <p className="text-[11px] text-slate-400">{t.hero.console.deploymentsDesc}</p>
                 </div>
 
                 <div className="p-3 rounded bg-slate-950 border border-slate-800/80 space-y-1">
                   <div className="flex items-center justify-between text-[11px]">
-                    <span className="text-orange-400 font-bold">// INFRASTRUCTURE</span>
-                    <span className="text-slate-500">PROXMOX</span>
+                    <span className="text-orange-400 font-bold">{t.hero.console.infra}</span>
+                    <span className="text-slate-500">{t.hero.console.infraActive}</span>
                   </div>
-                  <p className="text-slate-200 text-xs font-sans font-semibold">Misión Ribas & Active Directory</p>
-                  <p className="text-[11px] text-slate-400">Samba4 Domain & Sistema Asistencia</p>
+                  <p className="text-slate-200 text-xs font-sans font-semibold">{t.hero.console.infraTitle}</p>
+                  <p className="text-[11px] text-slate-400">{t.hero.console.infraDesc}</p>
                 </div>
               </div>
 
               <div className="text-[10px] text-slate-500 pt-2 border-t border-slate-800/80 flex items-center justify-between">
-                <span>EXEC_TIME: 14ms</span>
-                <span className="text-emerald-400 font-bold">100% VERIFIED</span>
+                <span>{t.hero.console.execTime}</span>
+                <span className="text-emerald-400 font-bold">{t.hero.console.verified}</span>
               </div>
             </div>
           </motion.div>
@@ -549,19 +369,19 @@ export default function Home() {
         {/* Complete Tech Stack Matrix with Logos */}
         <section id="habilidades" className="scroll-mt-24 space-y-8">
           <div>
-            <span className="text-xs font-mono text-amber-400 block">// STACK_KNOWLEDGE_MATRIX</span>
+            <span className="text-xs font-mono text-amber-400 block">{t.skills.tag}</span>
             <h3 className="text-2xl sm:text-4xl font-extrabold text-white font-sans">
-              Tecnologías y Dominios Principales
+              {t.skills.title}
             </h3>
             <p className="text-slate-400 text-xs sm:text-sm font-sans mt-1">
-              Desglose detallado del stack tecnológico con logos oficiales y áreas de dominio.
+              {t.skills.subtitle}
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 font-sans">
-            {techSkillsMatrix.map((domain, idx) => (
+            {skillCategoriesData.map((domain, idx) => (
               <motion.div
-                key={domain.category}
+                key={domain.key}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
@@ -571,25 +391,28 @@ export default function Home() {
                 <div>
                   <div className="flex items-center justify-between pb-3 border-b border-slate-800/80">
                     <span className={`px-2.5 py-1 rounded text-xs font-mono font-bold border ${domain.color}`}>
-                      // {domain.category}
+                      // {domain.title[language]}
                     </span>
                     <span className="text-[10px] font-mono text-slate-500">DOM_NODE_{idx + 1}</span>
                   </div>
 
                   <div className="grid grid-cols-1 gap-2.5 pt-4">
-                    {domain.items.map((item) => (
-                      <div
-                        key={item.name}
-                        className="flex items-center gap-3 p-2.5 rounded-lg bg-slate-950/80 border border-slate-800/90 hover:border-slate-700 transition-colors"
-                      >
-                        <div className="p-1.5 rounded bg-slate-900 shrink-0">
-                          {item.logo}
+                    {domain.items.map((item) => {
+                      const LogoComponent = TechLogos[item.logoKey] || TechLogos.Settings;
+                      return (
+                        <div
+                          key={item.name}
+                          className="flex items-center gap-3 p-2.5 rounded-lg bg-slate-950/80 border border-slate-800/90 hover:border-slate-700 transition-colors"
+                        >
+                          <div className="p-1.5 rounded bg-slate-900 shrink-0">
+                            <LogoComponent className="w-5 h-5" />
+                          </div>
+                          <span className="text-xs font-semibold text-slate-200 font-mono">
+                            {item.name}
+                          </span>
                         </div>
-                        <span className="text-xs font-semibold text-slate-200 font-mono">
-                          {item.name}
-                        </span>
-                      </div>
-                    ))}
+                      );
+                    })}
                   </div>
                 </div>
               </motion.div>
@@ -603,10 +426,10 @@ export default function Home() {
             <div className="space-y-1">
               <h3 className="text-lg font-bold text-white font-sans flex items-center justify-center sm:justify-start gap-2">
                 <Workflow className="w-5 h-5 text-blue-400" />
-                <span>"Writing code is easy. Building scalable systems is the craft."</span>
+                <span>{t.quote.title}</span>
               </h3>
               <p className="text-xs text-slate-400 font-sans">
-                Construcción disciplinada guiada por flujos de Git estructurados, revisión rigurosa de tickets y documentación técnica.
+                {t.quote.subtitle}
               </p>
             </div>
             <div className="flex items-center gap-4 text-xs font-mono shrink-0">
@@ -624,12 +447,12 @@ export default function Home() {
         <section id="proyectos" className="scroll-mt-24 space-y-8">
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
             <div>
-              <span className="text-xs font-mono text-blue-400 block">// TECHNICAL_CURATION</span>
+              <span className="text-xs font-mono text-blue-400 block">{t.projects.tag}</span>
               <h3 className="text-2xl sm:text-4xl font-extrabold text-white font-sans">
-                Production Systems & Repositories
+                {t.projects.title}
               </h3>
               <p className="text-slate-400 text-xs sm:text-sm font-sans mt-1">
-                Haz clic en las capturas para inspeccionar los módulos de cada plataforma.
+                {t.projects.subtitle}
               </p>
             </div>
 
@@ -643,7 +466,7 @@ export default function Home() {
                     : "text-slate-400 hover:text-white"
                 }`}
               >
-                ALL_NODES (6)
+                {t.projects.filters.all}
               </button>
               <button
                 onClick={() => setActiveTab("infra")}
@@ -653,7 +476,7 @@ export default function Home() {
                     : "text-slate-400 hover:text-white"
                 }`}
               >
-                INFRA_PROXMOX
+                {t.projects.filters.infra}
               </button>
               <button
                 onClick={() => setActiveTab("next")}
@@ -663,7 +486,7 @@ export default function Home() {
                     : "text-slate-400 hover:text-white"
                 }`}
               >
-                NEXT_FE
+                {t.projects.filters.next}
               </button>
               <button
                 onClick={() => setActiveTab("fullstack")}
@@ -673,7 +496,7 @@ export default function Home() {
                     : "text-slate-400 hover:text-white"
                 }`}
               >
-                FULLSTACK_BE
+                {t.projects.filters.fullstack}
               </button>
               <button
                 onClick={() => setActiveTab("tools")}
@@ -683,7 +506,7 @@ export default function Home() {
                     : "text-slate-400 hover:text-white"
                 }`}
               >
-                TOOLS_VITE
+                {t.projects.filters.tools}
               </button>
             </div>
           </div>
@@ -713,10 +536,10 @@ export default function Home() {
 
                   <div>
                     <h4 className="text-base font-bold text-white font-mono hover:text-blue-400 transition-colors">
-                      {project.title}
+                      {project.title[language]}
                     </h4>
                     <p className="text-slate-300 text-xs font-sans mt-2 leading-relaxed">
-                      {project.description}
+                      {project.description[language]}
                     </p>
                   </div>
 
@@ -724,22 +547,22 @@ export default function Home() {
                   {project.images && project.images.length > 0 && (
                     <div className="space-y-2 pt-2">
                       <span className="text-[10px] font-mono text-slate-400 uppercase tracking-wider flex items-center gap-1">
-                        <ImageIcon className="w-3 h-3 text-blue-400" /> MODULE_SCREENSHOTS:
+                        <ImageIcon className="w-3 h-3 text-blue-400" /> {t.projects.screenshots}
                       </span>
                       <div className="grid grid-cols-2 gap-2">
                         {project.images.map((img, idx) => (
                           <div
                             key={idx}
-                            onClick={() => setSelectedImage(img)}
+                            onClick={() => setSelectedImage({ src: img.src, caption: img.caption[language] })}
                             className="relative group cursor-pointer overflow-hidden rounded-lg border border-slate-800 aspect-video bg-slate-950"
                           >
                             <img
                               src={img.src}
-                              alt={img.caption}
+                              alt={img.caption[language]}
                               className="object-cover w-full h-full group-hover:scale-105 transition-transform duration-300"
                             />
                             <div className="absolute inset-0 bg-slate-950/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-[10px] font-mono text-white text-center p-1">
-                              INSPECT()
+                              {t.projects.inspect}
                             </div>
                           </div>
                         ))}
@@ -749,10 +572,10 @@ export default function Home() {
 
                   <div className="space-y-2 pt-2 border-t border-slate-800/80">
                     <span className="text-[10px] font-mono text-slate-400 uppercase tracking-wider">
-                      SPECIFICATIONS:
+                      {t.projects.specifications}
                     </span>
                     <ul className="space-y-1 text-xs text-slate-300 font-sans">
-                      {project.highlights.map((h, i) => (
+                      {project.highlights[language].map((h, i) => (
                         <li key={i} className="flex items-start gap-2">
                           <ChevronRight className="w-3.5 h-3.5 text-blue-400 shrink-0 mt-0.5" />
                           <span>{h}</span>
@@ -777,7 +600,7 @@ export default function Home() {
                   <div className="flex items-center gap-2 text-xs font-mono">
                     {project.isPrivateGithub ? (
                       <span className="flex-1 inline-flex items-center justify-center gap-1.5 px-3 py-2 rounded bg-slate-950 text-amber-400 border border-amber-800/40 text-[11px]">
-                        <Lock className="w-3.5 h-3.5" /> PRIVATE_REPO / INFRA
+                        <Lock className="w-3.5 h-3.5" /> {t.projects.privateRepo}
                       </span>
                     ) : (
                       project.githubUrl && (
@@ -788,7 +611,7 @@ export default function Home() {
                           className="flex-1 inline-flex items-center justify-center gap-1.5 px-3 py-2 rounded bg-slate-900 hover:bg-slate-800 text-white transition-all border border-slate-700/80"
                         >
                           <GithubIcon className="w-3.5 h-3.5" />
-                          <span>SOURCE_CODE</span>
+                          <span>{t.projects.sourceCode}</span>
                         </a>
                       )
                     )}
@@ -802,7 +625,7 @@ export default function Home() {
                         title="Ver App en Producción"
                       >
                         <Globe className="w-3.5 h-3.5" />
-                        <span>LIVE</span>
+                        <span>{t.projects.live}</span>
                       </a>
                     )}
 
@@ -815,7 +638,7 @@ export default function Home() {
                         title="Ver Backend Live API"
                       >
                         <Globe className="w-3.5 h-3.5" />
-                        <span>API</span>
+                        <span>{t.projects.api}</span>
                       </a>
                     )}
                   </div>
@@ -828,85 +651,46 @@ export default function Home() {
         {/* Sequential Experience Log Section */}
         <section id="experiencia" className="scroll-mt-24 space-y-8">
           <div>
-            <span className="text-xs font-mono text-emerald-400 block">// CHRONOLOGICAL_OPERATIONS</span>
+            <span className="text-xs font-mono text-emerald-400 block">{t.experience.tag}</span>
             <h3 className="text-2xl sm:text-4xl font-extrabold text-white font-sans">
-              Engineering Chronicles & Experience Log
+              {t.experience.title}
             </h3>
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.4 }}
-              className="glass-cyber-card rounded-xl p-6 border border-slate-800 space-y-4"
-            >
-              <div className="flex items-center justify-between text-xs font-mono text-slate-500 pb-2 border-b border-slate-800">
-                <span>[01] HARDWARE_MAINTENANCE</span>
-                <span className="text-blue-400">SUPPORT</span>
-              </div>
-              <div>
-                <h4 className="text-base font-bold text-white font-sans">EFPP</h4>
-                <p className="text-xs text-blue-400 font-mono">Escuela de Fortalecimiento del Poder Popular</p>
-              </div>
-              <div className="space-y-2 text-xs text-slate-300 font-sans">
-                <p className="font-semibold text-slate-200">Analista y Soporte a Computadoras</p>
-                <p className="text-slate-400">Diagnóstico, mantenimiento preventivo y correctivo de hardware, configuración de redes locales y soporte integral a usuarios.</p>
-              </div>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.4, delay: 0.1 }}
-              className="glass-cyber-card rounded-xl p-6 border border-slate-800 space-y-4"
-            >
-              <div className="flex items-center justify-between text-xs font-mono text-slate-500 pb-2 border-b border-slate-800">
-                <span>[02] NETWORKING_PASANTÍA</span>
-                <span className="text-emerald-400">2021 - 2023</span>
-              </div>
-              <div>
-                <h4 className="text-base font-bold text-white font-sans">CANTV</h4>
-                <p className="text-xs text-emerald-400 font-mono">Pasantías Primer Año</p>
-              </div>
-              <div className="space-y-2 text-xs text-slate-300 font-sans">
-                <p className="font-semibold text-slate-200">Proyecto 2024: <span className="text-emerald-400 font-mono font-bold">PROYECTO_APROBADO</span></p>
-                <p className="text-slate-400">Participación en proyectos técnicos de infraestructura de telecomunicaciones y redes de datos.</p>
-              </div>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.4, delay: 0.2 }}
-              className="glass-cyber-card rounded-xl p-6 border border-slate-800 space-y-4"
-            >
-              <div className="flex items-center justify-between text-xs font-mono text-slate-500 pb-2 border-b border-slate-800">
-                <span>[03] INSTITUTIONAL_SOFTWARE</span>
-                <span className="text-purple-400">2024 - 2025</span>
-              </div>
-              <div>
-                <h4 className="text-base font-bold text-white font-sans">Sindicatura Municipal</h4>
-                <p className="text-xs text-purple-400 font-mono">Pasantías Segundo Año</p>
-              </div>
-              <div className="space-y-2 text-xs text-slate-300 font-sans">
-                <p className="font-semibold text-slate-200">Proyecto 2025: <span className="text-emerald-400 font-mono font-bold">PROYECTO_APROBADO</span></p>
-                <p className="text-slate-400">Construcción e implementación de sistemas de software institucional y gestión administrativa.</p>
-              </div>
-            </motion.div>
+            {experienceList.map((exp, idx) => (
+              <motion.div
+                key={exp.id}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4, delay: idx * 0.1 }}
+                className="glass-cyber-card rounded-xl p-6 border border-slate-800 space-y-4"
+              >
+                <div className="flex items-center justify-between text-xs font-mono text-slate-500 pb-2 border-b border-slate-800">
+                  <span>{exp.code}</span>
+                  <span className="text-emerald-400">{exp.period}</span>
+                </div>
+                <div>
+                  <h4 className="text-base font-bold text-white font-sans">{exp.company}</h4>
+                  <p className="text-xs text-blue-400 font-mono">{exp.badge[language]}</p>
+                </div>
+                <div className="space-y-2 text-xs text-slate-300 font-sans">
+                  <p className="font-semibold text-slate-200">{exp.role[language]}</p>
+                  <p className="text-slate-400">{exp.description[language]}</p>
+                </div>
+              </motion.div>
+            ))}
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-4">
             <div className="glass-cyber-card rounded-xl p-6 border border-slate-800 space-y-3">
               <div className="flex items-center gap-3">
                 <UserCheck className="w-5 h-5 text-blue-400" />
-                <h4 className="text-base font-bold text-white font-sans">Team Lead Célula 01 (SIS-UNETI)</h4>
+                <h4 className="text-base font-bold text-white font-sans">{t.experience.sisUnetiTitle}</h4>
               </div>
               <p className="text-xs text-slate-300 font-sans leading-relaxed">
-                Supervisión del diseño de arquitectura de seguridad para la plataforma universitaria SIS-UNETI. Definición de estándares de código, revisión estricta de PRs y liderazgo del equipo técnico.
+                {t.experience.sisUnetiDesc}
               </p>
             </div>
 
@@ -914,12 +698,12 @@ export default function Home() {
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
                   <TechLogos.Proxmox className="w-6 h-6" />
-                  <h4 className="text-base font-bold text-white font-sans">Misión Ribas (Infraestructura & Active Directory)</h4>
+                  <h4 className="text-base font-bold text-white font-sans">{t.experience.misionRibasTitle}</h4>
                 </div>
                 <span className="px-2 py-0.5 rounded text-[10px] font-mono bg-orange-500/10 text-orange-400 border border-orange-500/20 font-bold">PROXMOX VE</span>
               </div>
               <p className="text-xs text-slate-300 font-sans leading-relaxed">
-                Despliegue de cluster en <strong>Proxmox VE</strong> con controlador de dominio <strong>Samba4 Active Directory</strong>, administración de usuarios RSAT, directivas de red y el <strong>Sistema Web de Asistencia y Gestión de Empleados</strong>.
+                {t.experience.misionRibasDesc}
               </p>
             </div>
           </div>
@@ -968,14 +752,14 @@ export default function Home() {
       {/* Terminal Footer */}
       <footer className="border-t border-slate-800/80 bg-slate-950/90 py-8 text-center text-xs font-mono text-slate-500">
         <div className="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p>© 2026 F_DURÁN // SECURED (ragnarsson03). Next.js & Tailwind CSS.</p>
+          <p>{t.footer.rights}</p>
           <div className="flex items-center gap-4">
             <a href="https://github.com/ragnarsson03" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">
-              GITHUB_PROFILE
+              {t.footer.github}
             </a>
             <span>•</span>
             <a href="https://app-detector-de-voz.vercel.app/" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">
-              LIVE_SPEECH_AI
+              {t.footer.liveSpeech}
             </a>
           </div>
         </div>
