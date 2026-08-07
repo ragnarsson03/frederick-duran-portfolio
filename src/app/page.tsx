@@ -49,15 +49,16 @@ const TechLogos: Record<string, (props: { className?: string }) => React.JSX.Ele
     </svg>
   ),
   Nextjs: (props) => (
-    <svg className={props.className || "w-5 h-5"} viewBox="0 0 180 180" fill="none">
-      <mask id="mask0_next" maskUnits="userSpaceOnUse" x="0" y="0" width="180" height="180">
-        <circle cx="90" cy="90" r="90" fill="black" />
-      </mask>
-      <g mask="url(#mask0_next)">
-        <circle cx="90" cy="90" r="90" fill="white" />
-        <path d="M149.508 157.52L69.142 54H54V125.97H66.8136V70.2641L136.626 160.419C141.173 159.7 145.495 158.72 149.508 157.52Z" fill="black" />
-        <rect x="115" y="54" width="13" height="72" fill="black" />
-      </g>
+    <svg className={props.className || "w-5 h-5"} viewBox="0 0 24 24" fill="none">
+      <circle cx="12" cy="12" r="12" fill="#000000" />
+      <path d="M9.5 7.5H11V16.5H9.5V7.5Z" fill="white" />
+      <path d="M13 7.5L18.5 16.5H14.5L9 7.5H13Z" fill="url(#next-grad)" />
+      <defs>
+        <linearGradient id="next-grad" x1="13" y1="7.5" x2="18.5" y2="16.5" gradientUnits="userSpaceOnUse">
+          <stop stopColor="white" />
+          <stop offset="1" stopColor="white" stopOpacity="0" />
+        </linearGradient>
+      </defs>
     </svg>
   ),
   TypeScript: (props) => (
@@ -126,6 +127,30 @@ const TechLogos: Record<string, (props: { className?: string }) => React.JSX.Ele
     <svg className={props.className || "w-5 h-5"} viewBox="0 0 100 100">
       <rect width="100" height="100" rx="20" fill="#C7254E"/>
       <text x="50%" y="62%" textAnchor="middle" fill="#FFFFFF" fontSize="32" fontWeight="bold" fontFamily="monospace">AD</text>
+    </svg>
+  ),
+  PostgreSQL: (props) => (
+    <svg className={props.className || "w-5 h-5"} viewBox="0 0 100 100">
+      <defs>
+        <linearGradient id="pg-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stopColor="#336791" />
+          <stop offset="100%" stopColor="#0064a5" />
+        </linearGradient>
+      </defs>
+      <rect width="100" height="100" rx="18" fill="url(#pg-grad)" />
+      <text x="50%" y="38%" textAnchor="middle" fill="white" fontSize="22" fontWeight="bold" fontFamily="monospace">PG</text>
+      <ellipse cx="50" cy="60" rx="22" ry="8" fill="none" stroke="white" strokeWidth="4"/>
+      <line x1="28" y1="60" x2="28" y2="75" stroke="white" strokeWidth="4"/>
+      <line x1="72" y1="60" x2="72" y2="75" stroke="white" strokeWidth="4"/>
+      <line x1="28" y1="75" x2="72" y2="75" stroke="white" strokeWidth="4"/>
+    </svg>
+  ),
+  MySQL: (props) => (
+    <svg className={props.className || "w-5 h-5"} viewBox="0 0 100 100">
+      <rect width="100" height="100" rx="18" fill="#00618A" />
+      <text x="50%" y="34%" textAnchor="middle" fill="#F29111" fontSize="20" fontWeight="900" fontFamily="monospace">My</text>
+      <text x="50%" y="62%" textAnchor="middle" fill="white" fontSize="20" fontWeight="900" fontFamily="monospace">SQL</text>
+      <line x1="20" y1="70" x2="80" y2="70" stroke="#F29111" strokeWidth="3" />
     </svg>
   ),
   REST: (props) => <Server className={props.className || "w-5 h-5 text-purple-400"} />,
@@ -457,9 +482,10 @@ export default function Home() {
             </div>
 
             {/* Filter Tabs */}
-            <div className="flex items-center gap-1.5 p-1 rounded-lg bg-slate-950 border border-slate-800 self-start text-xs font-mono">
+            <div className="flex flex-wrap items-center gap-1.5 p-1 rounded-lg bg-slate-950 border border-slate-800 self-start text-xs font-mono">
               <button
-                onClick={() => setActiveTab("all")}
+                type="button"
+                onClick={(e) => { e.preventDefault(); setActiveTab("all"); }}
                 className={`px-3 py-1.5 rounded transition-all ${
                   activeTab === "all"
                     ? "bg-blue-600 text-white font-bold"
@@ -469,7 +495,8 @@ export default function Home() {
                 {t.projects.filters.all}
               </button>
               <button
-                onClick={() => setActiveTab("infra")}
+                type="button"
+                onClick={(e) => { e.preventDefault(); setActiveTab("infra"); }}
                 className={`px-3 py-1.5 rounded transition-all ${
                   activeTab === "infra"
                     ? "bg-orange-600 text-white font-bold"
@@ -479,7 +506,8 @@ export default function Home() {
                 {t.projects.filters.infra}
               </button>
               <button
-                onClick={() => setActiveTab("next")}
+                type="button"
+                onClick={(e) => { e.preventDefault(); setActiveTab("next"); }}
                 className={`px-3 py-1.5 rounded transition-all ${
                   activeTab === "next"
                     ? "bg-blue-600 text-white font-bold"
@@ -489,7 +517,8 @@ export default function Home() {
                 {t.projects.filters.next}
               </button>
               <button
-                onClick={() => setActiveTab("fullstack")}
+                type="button"
+                onClick={(e) => { e.preventDefault(); setActiveTab("fullstack"); }}
                 className={`px-3 py-1.5 rounded transition-all ${
                   activeTab === "fullstack"
                     ? "bg-blue-600 text-white font-bold"
@@ -499,7 +528,8 @@ export default function Home() {
                 {t.projects.filters.fullstack}
               </button>
               <button
-                onClick={() => setActiveTab("tools")}
+                type="button"
+                onClick={(e) => { e.preventDefault(); setActiveTab("tools"); }}
                 className={`px-3 py-1.5 rounded transition-all ${
                   activeTab === "tools"
                     ? "bg-blue-600 text-white font-bold"
@@ -697,7 +727,7 @@ export default function Home() {
             <div className="glass-cyber-card rounded-xl p-6 border border-slate-800 space-y-3">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
-                  <TechLogos.Proxmox className="w-6 h-6" />
+                  {TechLogos.Proxmox({ className: "w-6 h-6" })}
                   <h4 className="text-base font-bold text-white font-sans">{t.experience.misionRibasTitle}</h4>
                 </div>
                 <span className="px-2 py-0.5 rounded text-[10px] font-mono bg-orange-500/10 text-orange-400 border border-orange-500/20 font-bold">PROXMOX VE</span>

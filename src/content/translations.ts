@@ -4,40 +4,40 @@ export const translations = {
   es: {
     nav: {
       version: "F_DURÁN_v2.6",
-      status: "SYSTEM_ACTIVE // STABLE_ENV",
+      status: "SISTEMA_ACTIVO // ENV_ESTABLE",
       tabs: {
-        hero: "startup.sh",
-        stack: "stack.json",
-        projects: "projects.ts",
-        experience: "experience.log"
+        hero: "inicio.sh",
+        stack: "tecnologias.json",
+        projects: "proyectos.ts",
+        experience: "experiencia.log"
       },
       githubBtn: "GITHUB"
     },
     hero: {
-      badge: "ROOT_ORCHESTRATOR // FULL_STACK_ENGINEER",
-      tagline: "// EXECUTIVE_SUMMARY",
+      badge: "ORQUESTADOR_RAÍZ // INGENIERO_FULLSTACK",
+      tagline: "// RESUMEN_EJECUTIVO",
       name: "Frederick Durán",
-      subRole: "Software Architect & Team Lead Célula 01 @ SIS-UNETI",
-      bio: "Diseño y construcción de soluciones digitales de alta escala con integridad structural y arquitectura limpia. Especializado en React, Next.js, TypeScript, Node.js y despliegues en la nube en producción.",
+      subRole: "Arquitecto de Software & Team Lead Célula 01 @ SIS-UNETI",
+      bio: "Diseño y construcción de soluciones digitales de alta escala con integridad estructural y arquitectura limpia. Especializado en React, Next.js, TypeScript, Node.js y despliegues en producción en la nube.",
       leadership: "Liderazgo técnico comprobado gestionando revisiones de código (PRs), estándares de desarrollo, microservicios e infraestructura de servidores incluyendo Proxmox VE + Samba4 Active Directory en Misión Ribas.",
-      exploreBtn: "EXPLORE_PROJECTS()",
-      demoBtn: "LIVE_DEMO_AI()",
+      exploreBtn: "VER_PROYECTOS()",
+      demoBtn: "DEMO_IA_EN_VIVO()",
       console: {
-        header: "kernel_status.log",
-        role: "// ROLE",
-        roleActive: "ACTIVE",
+        header: "estado_kernel.log",
+        role: "// ROL",
+        roleActive: "ACTIVO",
         roleTitle: "Team Lead Célula 01",
-        roleDesc: "SIS-UNETI PR Reviews & Security",
-        deployments: "// DEPLOYMENTS",
+        roleDesc: "SIS-UNETI Revisión de PRs & Seguridad",
+        deployments: "// DESPLIEGUES",
         deploymentsActive: "VERCEL",
         deploymentsTitle: "Ecosistema Digital San Agustín",
-        deploymentsDesc: "CI/CD Pipeline & Express Backend",
-        infra: "// INFRASTRUCTURE",
+        deploymentsDesc: "Pipeline CI/CD & Backend Express",
+        infra: "// INFRAESTRUCTURA",
         infraActive: "PROXMOX",
         infraTitle: "Misión Ribas & Active Directory",
-        infraDesc: "Samba4 Domain & Sistema Asistencia",
-        execTime: "EXEC_TIME: 14ms",
-        verified: "100% VERIFIED"
+        infraDesc: "Dominio Samba4 & Sistema Asistencia",
+        execTime: "TIEMPO_EXEC: 14ms",
+        verified: "100% VERIFICADO"
       }
     },
     quote: {
@@ -45,31 +45,31 @@ export const translations = {
       subtitle: "Construcción disciplinada guiada por flujos de Git estructurados, revisión rigurosa de tickets y documentación técnica."
     },
     skills: {
-      tag: "// STACK_KNOWLEDGE_MATRIX",
+      tag: "// MATRIZ_DE_CONOCIMIENTO",
       title: "Tecnologías y Dominios Principales",
       subtitle: "Desglose detallado del stack tecnológico con logos oficiales y áreas de dominio."
     },
     projects: {
-      tag: "// TECHNICAL_CURATION",
+      tag: "// CURACIÓN_TÉCNICA",
       title: "Sistemas en Producción y Repositorios",
       subtitle: "Haz clic en las capturas para inspeccionar los módulos de cada plataforma.",
       filters: {
-        all: "ALL_NODES (6)",
-        infra: "INFRA_PROXMOX",
+        all: "TODOS (6)",
+        infra: "INFRAEST_PROXMOX",
         next: "NEXT_FE",
         fullstack: "FULLSTACK_BE",
-        tools: "TOOLS_VITE"
+        tools: "HERRAMIENTAS"
       },
       specifications: "ESPECIFICACIONES:",
-      screenshots: "MODULE_SCREENSHOTS:",
-      inspect: "INSPECT()",
-      privateRepo: "PRIVATE_REPO / INFRA",
-      sourceCode: "SOURCE_CODE",
-      live: "LIVE",
+      screenshots: "CAPTURAS_MÓDULO:",
+      inspect: "INSPECCIONAR()",
+      privateRepo: "REPO_PRIVADO / INFRA",
+      sourceCode: "CÓDIGO_FUENTE",
+      live: "EN_VIVO",
       api: "API"
     },
     experience: {
-      tag: "// CHRONOLOGICAL_OPERATIONS",
+      tag: "// OPERACIONES_CRONOLÓGICAS",
       title: "Cronología de Ingeniería y Experiencia Laboral",
       sisUnetiTitle: "Team Lead Célula 01 (SIS-UNETI)",
       sisUnetiDesc: "Supervisión del diseño de arquitectura de seguridad para la plataforma universitaria SIS-UNETI. Definición de estándares de código, revisión estricta de PRs y liderazgo del equipo técnico.",
@@ -80,9 +80,9 @@ export const translations = {
       close: "Cerrar"
     },
     footer: {
-      rights: "© 2026 F_DURÁN // SECURED (ragnarsson03). Next.js & Tailwind CSS.",
-      github: "GITHUB_PROFILE",
-      liveSpeech: "LIVE_SPEECH_AI"
+      rights: "© 2026 F_DURÁN // ASEGURADO (ragnarsson03). Next.js & Tailwind CSS.",
+      github: "PERFIL_GITHUB",
+      liveSpeech: "IA_RECONOCIMIENTO_VOZ"
     }
   },
   en: {
@@ -498,7 +498,9 @@ export const skillCategoriesData: SkillCategory[] = [
     color: "border-emerald-500/30 text-emerald-400 bg-emerald-500/5",
     items: [
       { name: "MongoDB Atlas", logoKey: "MongoDB" },
-      { name: "Supabase (PostgreSQL)", logoKey: "Supabase" }
+      { name: "PostgreSQL", logoKey: "PostgreSQL" },
+      { name: "MySQL", logoKey: "MySQL" },
+      { name: "Supabase", logoKey: "Supabase" }
     ]
   },
   {
